@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<!-- saved from url=(0164)file:///C:/Users/diksh/AppData/Local/Temp/da009a19-a068-4585-814a-1d4636e49834_piyuuuuuu-20250731T140719Z-1-001.zip.834/piyuuuuuu/jahnvi/diyuu_/diyuu/diyuuuuuu.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CryptoLock Messenger</title>
+<style>
+  * {
+    margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    user-select:none;
+  }
+  html, body {
+    height:100%;
+    background: linear-gradient(135deg, #cce5cc, #a6d5a6);
+    color:#375235;
+    overflow:hidden;
+  }
+  /* LOGIN PAGE */
+  .login-container {
+    background: rgba(179, 217, 179, 0.6);
+    padding: 60px 40px;
+    border-radius: 16px;
+    box-shadow: 0 0 30px #6fa46f99 inset;
+    width: 320px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .login-container.hidden {
+    display: none;
+  }
+  h1, h2 {
+    font-weight: 700;
+    text-align: center;
+    color: #375235;
+    text-shadow: 2px 2px 6px #7ba07b99;
+  }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+  }
+  h2 {
+    font-size: 2.8rem;
+    margin-bottom: 32px;
+    color: #4c7a4c;
+    text-shadow: 0 0 6px #86b486cc;
+  }
+
+  input[type="password"] {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 1.3rem;
+    border: 2px solid #7ba07b;
+    border-radius: 12px;
+    background: #d9f0d9;
+    color: #375235;
+    box-shadow: inset 0 0 8px #7ba07b88;
+    outline: none;
+    transition: border-color 0.3s ease;
+    font-weight: bold;
+  }
+  input[type="password"]::placeholder {
+    font-weight: 400;
+    color: #7ba07b88;
+    font-style: italic;
+  }
+  input[type="password"]:focus {
+    border-color: #4c744c;
+    box-shadow: 0 0 8px #4c744cbb;
+  }
+  button {
+    margin-top: 36px;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 20px;
+    background: #7ba07b;
+    color: #e9f0e9;
+    cursor: pointer;
+    box-shadow: 0 6px 10px #6a8a6a99;
+    transition: background-color 0.3s ease;
+    user-select:none;
+  }
+  button:hover {
+    background-color: #5a7a5a;
+  }
+
+  /* MAIN APP PAGES */
+  .page {
+    position:absolute;
+    width:100vw;
+    height:100vh;
+    background: linear-gradient(135deg, #d9f0d9, #b3d9b3);
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items:center;
+    padding: 40px 20px;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.5s ease;
+    box-shadow: inset 0 0 60px #6fa46f99;
+    border-radius: 20px;
+    max-width: 900px;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #375235;
+  }
+  .page.active {
+    opacity:1;
+    pointer-events:auto;
+  }
+  .flex-row {
+    display: flex;
+    gap: 24px;
+    max-width: 900px;
+    width: 100%;
+    margin-bottom: 28px;
+  }
+  textarea, input[type="password"] {
+    background: #c0e6b9;
+    border: 2px solid #7fa77f;
+    border-radius: 14px;
+    color: #375235;
+    font-size: 1.15rem;
+    padding: 18px 22px;
+    box-shadow: 4px 4px 10px #a2c49a, -4px -4px 10px #d6f1d6;
+    font-family: monospace;
+    resize: vertical;
+    flex: 1;
+    transition: border-color 0.3s ease;
+    text-align: center;
+  }
+  textarea[readonly] {
+    background: #d6efd6;
+    color: #3e633e;
+    border-color: #7ca67c;
+    box-shadow: inset 2px 2px 6px #a9d4a9;
+  }
+  textarea::placeholder, input::placeholder {
+    color: #8cb98ccc;
+    font-style: italic;
+  }
+  textarea:focus, input[type="password"]:focus {
+    outline:none;
+    border-color: #5a9d5a;
+    box-shadow: 0 0 10px #82b382aa;
+  }
+  .nav-buttons {
+    display: flex;
+    gap: 18px;
+    max-width: 440px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .nav-buttons button {
+    flex: 1 1 48%;
+    margin-bottom: 0;
+  }
+  .error-msg {
+    color: #b24e4e;
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 1rem;
+    max-width: 900px;
+    width: 100%;
+    min-height: 22px;
+    user-select:none;
+    text-align: center;
+  }
+  #key-result {
+    max-width: 900px;
+    width: 100%;
+    background: #a7d7a7;
+    border-radius: 18px;
+    padding: 20px 26px;
+    font-family: monospace;
+    font-size: 1rem;
+    box-shadow: inset 4px 4px 14px #82b182, inset -4px -4px 14px #c1efc1;
+    user-select: all;
+    color: #355335;
+    margin-top: 18px;
+    text-align: center;
+    word-break: break-word;
+  }
+  @media (max-width: 720px) {
+    .flex-row {
+      flex-direction: column;
+    }
+    textarea, input[type="password"] {
+      flex: none;
+      width: 100%;
+    }
+    button, .nav-buttons {
+      max-width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page" class="login-container">
+  <h1>CryptoLock Messenger</h1>
+  <input type="password" id="password" placeholder="Enter password" autocomplete="off">
+  <div id="login-error" class="error-msg" style="color:#b24e4e; margin-top:10px; min-height:20px;"></div>
+  <button onclick="login()">Login</button>
+</div>
+
+<!-- ENCRYPT/DECRYPT PAGE -->
+<div id="page-encrypt" class="page">
+  <h2>Encrypt &amp; Decrypt</h2>
+  <div class="flex-row">
+    <textarea id="message" placeholder="Type message here..."></textarea>
+    <textarea id="encrypted" placeholder="Encrypted message (Base64)" readonly=""></textarea>
+  </div>
+  <div id="msg-error" class="error-msg"></div>
+  <div class="flex-row" style="max-width: 900px; gap: 28px;">
+    <button style="flex:1;" onclick="encryptMessage()">Encrypt</button>
+    <button style="flex:1;" onclick="decryptMessage()">Decrypt</button>
+  </div>
+  <textarea id="decrypted" placeholder="Decrypted message" readonly="" style="max-width: 900px; margin-top:20px;"></textarea>
+
+  <div class="nav-buttons" style="margin-top:30px;">
+    <button onclick="showPage(&#39;page-key&#39;)">AES Key Page</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<!-- AES KEY PAGE -->
+<div id="page-key" class="page">
+  <h2>AES Key Generator</h2>
+  <button onclick="generateAESKey()">Generate AES Key</button>
+  <pre id="key-result">No key generated yet.</pre>
+
+  <div class="nav-buttons">
+    <button onclick="showPage(&#39;page-encrypt&#39;)">Back to Encrypt/Decrypt</button>
+    <button onclick="logout()">Logout</button>
+  </div>
+</div>
+
+<script>
+  const correctPassword = "password123"; // set your password here
+  let cryptoKey = null;
+
+  // Switch visible pages
+  function showPage(id) {
+    document.getElementById('login-page').style.display = 'none';
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    if(id === 'login-page') {
+      document.getElementById('login-page').style.display = 'block';
+    } else {
+      document.getElementById(id).classList.add('active');
+    }
+    clearErrors();
+    clearFieldsIfNeeded(id);
+  }
+
+  function clearErrors() {
+    document.querySelectorAll('.error-msg').forEach(e => e.textContent = '');
+  }
+
+  function clearFieldsIfNeeded(id) {
+    if(id === 'login-page') {
+      document.getElementById('password').value = '';
+    }
+    if(id === 'page-encrypt') {
+      document.getElementById('message').value = '';
+      document.getElementById('encrypted').value = '';
+      document.getElementById('decrypted').value = '';
+      document.getElementById('msg-error').textContent = '';
+    }
+    if(id === 'page-key' && !cryptoKey) {
+      document.getElementById('key-result').textContent = 'No key generated yet.';
+    }
+  }
+
+  async function login() {
+    clearErrors();
+    const pw = document.getElementById('password').value.trim();
+    if(!pw) {
+      document.getElementById('login-error').textContent = "Password cannot be empty.";
+      return;
+    }
+    if(pw !== correctPassword) {
+      document.getElementById('login-error').textContent = "Incorrect password!";
+      return;
+    }
+    // generate initial crypto key
+    cryptoKey = await window.crypto.subtle.generateKey(
+      {name:"AES-GCM", length:256},
+      true,
+      ["encrypt","decrypt"]
+    );
+    showPage('page-encrypt');
+  }
+
+  async function generateAESKey() {
+    cryptoKey = await window.crypto.subtle.generateKey(
+      {name:"AES-GCM", length:256},
+      true,
+      ["encrypt","decrypt"]
+    );
+    const rawKey = await window.crypto.subtle.exportKey("raw", cryptoKey);
+    const base64Key = arrayBufferToBase64(rawKey);
+    document.getElementById('key-result').textContent = base64Key;
+  }
+
+  async function encryptMessage() {
+    clearErrors();
+    if(!cryptoKey) {
+      document.getElementById('msg-error').textContent = "Generate AES key first on AES Key page.";
+      return;
+    }
+    const msg = document.getElementById('message').value.trim();
+    if(!msg) {
+      document.getElementById('msg-error').textContent = "Enter message to encrypt.";
+      return;
+    }
+    const encoder = new TextEncoder();
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const encodedMsg = encoder.encode(msg);
+    try {
+      const encrypted = await window.crypto.subtle.encrypt(
+        {name:"AES-GCM", iv},
+        cryptoKey,
+        encodedMsg
+      );
+      const combined = new Uint8Array(iv.length + encrypted.byteLength);
+      combined.set(iv, 0);
+      combined.set(new Uint8Array(encrypted), iv.length);
+      document.getElementById('encrypted').value = arrayBufferToBase64(combined.buffer);
+      document.getElementById('decrypted').value = '';
+    } catch(e) {
+      document.getElementById('msg-error').textContent = "Encryption failed.";
+      console.error(e);
+    }
+  }
+
+  async function decryptMessage() {
+    clearErrors();
+    if(!cryptoKey) {
+      document.getElementById('msg-error').textContent = "Generate AES key first on AES Key page.";
+      return;
+    }
+    const encryptedB64 = document.getElementById('encrypted').value.trim();
+    if(!encryptedB64) {
+      document.getElementById('msg-error').textContent = "Enter encrypted message to decrypt.";
+      return;
+    }
+    try {
+      const combinedBuffer = base64ToArrayBuffer(encryptedB64);
+      const combined = new Uint8Array(combinedBuffer);
+      const iv = combined.slice(0,12);
+      const data = combined.slice(12);
+      const decryptedBuffer = await window.crypto.subtle.decrypt(
+        {name:"AES-GCM", iv},
+        cryptoKey,
+        data
+      );
+      const decoder = new TextDecoder();
+      document.getElementById('decrypted').value = decoder.decode(decryptedBuffer);
+    } catch(e) {
+      document.getElementById('msg-error').textContent = "Decryption failed. Check key/message.";
+      console.error(e);
+    }
+  }
+
+  function logout() {
+    cryptoKey = null;
+    clearErrors();
+    clearFieldsIfNeeded('login-page');
+    showPage('login-page');
+  }
+
+  function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    for(let b of bytes) {
+      binary += String.fromCharCode(b);
+    }
+    return window.btoa(binary);
+  }
+
+  function base64ToArrayBuffer(base64) {
+    const binary = window.atob(base64);
+    const len = binary.length;
+    const bytes = new Uint8Array(len);
+    for(let i=0; i<len; i++) {
+      bytes[i] = binary.charCodeAt(i);
+    }
+    return bytes.buffer;
+  }
+</script>
+
+
+
+</body></html>
